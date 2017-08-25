@@ -22,7 +22,8 @@
     "url": "https://github.com/aervin/usd-please/issues"
   },
   "homepage": "https://github.com/aervin/usd-please#readme",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "colors": "^1.1.2"
   }
 }

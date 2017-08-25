@@ -7,25 +7,23 @@ var usdPlease = {
             var leftOfDecimal = /.+?(?=\.)/g
             var rightOfDecimal = /[^.]+$/g
 
-            var leftNumber = _useCents
-                ? _formatMe.match(leftOfDecimal)[0]
-                : _formatMe
-            var rightNumber = _formatMe.match(rightOfDecimal)[0] || undefined
+            var leftNumber = _formatMe.match(leftOfDecimal)[0]
+            var roundUp = parseInt(_formatMe.match(rightOfDecimal)[0]) >= 50 || false
 
             var dollars = getUSDCommaSeparatedNumber(leftNumber)
-            var cents = rightNumber
+            var cents = _useCents
+                ? _formatMe.match(rightOfDecimal)[0]
+                : undefined
 
-            var roundUp = false
-            if (rightNumber !== undefined && !_useCents) {
-                roundUp = parseInt(rightNumber) >= 50 ? true : false
-            }
-            dollars =
-                roundUp && !_useCents
+            if (!_useCents) {
+                dollars = roundUp
                     ? getUSDCommaSeparatedNumber(
                           (parseInt(leftNumber) + 1).toString()
                       )
                     : dollars
-            var result = dollars + (cents !== undefined ? '.' + cents : '')
+            }
+
+            var result = `${dollars}${cents !== undefined ? `.` + cents : ``}`
             return result
         }
         return undefined
