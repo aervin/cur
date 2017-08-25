@@ -1,0 +1,25 @@
+{
+  "name": "usd-please",
+  "version": "1.0.0",
+  "description": "It transforms integers/decimals into USD currency format.",
+  "main": "usd-please.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aervin/usd-please.git"
+  },
+  "keywords": [
+    "javascript",
+    "currency",
+    "usd",
+    "formatting"
+  ],
+  "author": "aaron.jeffrey.ervin@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aervin/usd-please/issues"
+  },
+  "homepage": "https://github.com/aervin/usd-please#readme"
+}
