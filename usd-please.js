@@ -60,10 +60,7 @@ var round = function(value, exp) {
 }
 
 var validateArgs = function(args) {
-    if (types.indexOf(typeof args) >= 0) {
-        return true
-    }
-    return false
+    return types.indexOf(typeof args) >= 0 ? true : false
 }
 
 module.exports = usdPlease
