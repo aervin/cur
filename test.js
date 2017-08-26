@@ -8,102 +8,102 @@ const fail = desc => console.log(`${desc} ${colors.bgRed(`FAIL!`)}`)
 const start = Date.now()
 let testCount = 0
 
-console.log(`Testing usd-please...\n`)
-
-/**
- * The transform API should only return a string
- * or undefined if the first arg is a number
- */
-testCount++
-let result = usd.transform(1234.56, false)
-const returnsString = `It should return a string...`
-try {
-    assert.strictEqual(typeof result, 'string')
-    pass(returnsString)
-} catch (e) {
-    fail(returnsString)
-    console.log(e.message)
-    return
-}
-
-/**
- * The transform API should return undefined if
- * first argument is not of type "number"
- */
-testCount++
-result = usd.transform('1234.56', false)
-const returnsUndefined = `It should return undefined...`
-try {
-    assert.strictEqual(result, undefined)
-    pass(returnsUndefined)
-} catch (e) {
-    fail(returnsUndefined)
-    console.log(e.message)
-    return
-}
+console.log(`${colors.bgYellow.black(`Testing usd-please...\n`)}`)
 
 testCount++
-result = usd.transform(1234.56, true)
-const returnsWithCents = `It should return with 56 cents...`
+let result = usd(1234.56, false)
+let expected = 'string'
+let testDesc = `[${testCount}] It should return a string...`
 try {
-    assert.strictEqual(result, '1,234.56')
-    pass(returnsWithCents)
+    assert.strictEqual(typeof result, expected)
+    pass(testDesc)
 } catch (e) {
-    fail(returnsWithCents)
-    console.log(e.message)
-    return
-}
-
-/**
- * The transform API should round floats
- * down to 2 digits
- */
-testCount++
-result = usd.transform(1234.56112, true)
-const roundsCentsDown = `It should round cents down...`
-try {
-    assert.strictEqual(result, '1,234.56')
-    pass(roundsCentsDown)
-} catch (e) {
-    fail(roundsCentsDown)
-    console.log(e.message)
-    return
-}
-
-/**
- * The transform API should round floats
- * up to 2 digits
- */
-testCount++
-result = usd.transform(1234.56712, true)
-const roundsCentsUp = `It should round cents up...`
-try {
-    assert.strictEqual(result, '1,234.57')
-    pass(roundsCentsUp)
-} catch (e) {
-    fail(roundsCentsUp)
-    console.log(e.message)
-    return
-}
-
-/**
- * The transform API should round to
- * a whole integer if the second argument
- * is false
- */
-testCount++
-result = usd.transform(1234.56712, false)
-expected = '1,235'
-const roundToWholeInt = `It should round to whole integer ${expected}...`
-try {
-    assert.strictEqual(result, expected)
-    pass(roundToWholeInt)
-} catch (e) {
-    fail(roundToWholeInt)
+    fail(testDesc)
     console.log(`${result} !== ${expected}`)
     return
 }
 
+testCount++
+result = usd('1234.56', false)
+expected = undefined
+testDesc = `[${testCount}] It should return undefined...`
+try {
+    assert.strictEqual(result, expected)
+    pass(testDesc)
+} catch (e) {
+    fail(testDesc)
+    console.log(`${result} !== ${expected}`)
+    return
+}
+
+testCount++
+result = usd(1234.56, true)
+expected = '1,234.56'
+testDesc = `[${testCount}] It should return with 56 cents...`
+try {
+    assert.strictEqual(result, expected)
+    pass(testDesc)
+} catch (e) {
+    fail(testDesc)
+    console.log(`${result} !== ${expected}`)
+    return
+}
+
+testCount++
+result = usd(1234.56112, true)
+expected = '1,234.56'
+testDesc = `[${testCount}] It should round cents down...`
+try {
+    assert.strictEqual(result, expected)
+    pass(testDesc)
+} catch (e) {
+    fail(testDesc)
+    console.log(`${result} !== ${expected}`)
+    return
+}
+
+testCount++
+result = usd(1234.56712, true)
+expected = '1,234.57'
+testDesc = `[${testCount}] It should round cents up...`
+try {
+    assert.strictEqual(result, expected)
+    pass(testDesc)
+} catch (e) {
+    fail(testDesc)
+    console.log(`${result} !== ${expected}`)
+    return
+}
+
+testCount++
+result = usd(1234.56712, false)
+expected = '1,235'
+testDesc = `[${testCount}] It should round to whole integer ${expected}...`
+try {
+    assert.strictEqual(result, expected)
+    pass(testDesc)
+} catch (e) {
+    fail(testDesc)
+    console.log(`${result} !== ${expected}`)
+    return
+}
+
+testCount++
+result = usd(1234.2, true)
+expected = '1,234.20'
+testDesc = `[${testCount}] It should make .2 cents into .20 cents...`
+try {
+    assert.strictEqual(result, expected)
+    pass(testDesc)
+} catch (e) {
+    fail(testDesc)
+    console.log(`${result} !== ${expected}`)
+    return
+}
+
+/**
+ * Add additional assertion tests here
+ */
 
 /**
  * Exiting...

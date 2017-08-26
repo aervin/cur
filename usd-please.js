@@ -1,33 +1,34 @@
-var usdPlease = {
-    transform: function(formatMe, useCents) {
-        if (validateArgs(formatMe)) {
-            var _formatMe = round(formatMe, 2).toString()
-            var _useCents = useCents
+var usdPlease = function(formatMe, useCents) {
+    if (validateArgs(formatMe)) {
+        var _formatMe = round(formatMe, 2).toString()
+        var _useCents = useCents
 
-            var leftOfDecimal = /.+?(?=\.)/g
-            var rightOfDecimal = /[^.]+$/g
+        var leftOfDecimal = /.+?(?=\.)/g
+        var rightOfDecimal = /[^.]+$/g
 
-            var leftNumber = _formatMe.match(leftOfDecimal)[0]
-            var roundUp = parseInt(_formatMe.match(rightOfDecimal)[0]) >= 50 || false
+        var leftNumber = _formatMe.match(leftOfDecimal)[0]
+        var roundUp =
+            parseInt(_formatMe.match(rightOfDecimal)[0]) >= 50 || false
 
-            var dollars = getUSDCommaSeparatedNumber(leftNumber)
-            var cents = _useCents
-                ? _formatMe.match(rightOfDecimal)[0]
-                : undefined
+        var dollars = getUSDCommaSeparatedNumber(leftNumber)
+        var cents = _useCents ? _formatMe.match(rightOfDecimal)[0] : undefined
 
-            if (!_useCents) {
-                dollars = roundUp
-                    ? getUSDCommaSeparatedNumber(
-                          (parseInt(leftNumber) + 1).toString()
-                      )
-                    : dollars
-            }
-
-            var result = `${dollars}${cents !== undefined ? `.` + cents : ``}`
-            return result
+        if (cents !== undefined && cents.length < 2) {
+            cents += `0`
         }
-        return undefined
+
+        if (!_useCents) {
+            dollars = roundUp
+                ? getUSDCommaSeparatedNumber(
+                      (parseInt(leftNumber) + 1).toString()
+                  )
+                : dollars
+        }
+
+        var result = `${dollars}${cents !== undefined ? `.` + cents : ``}`
+        return result
     }
+    return undefined
 }
 
 var isFloat = function(num) {
