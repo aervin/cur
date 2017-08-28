@@ -24,6 +24,7 @@
   "homepage": "https://github.com/aervin/usd-please#readme",
   "dependencies": {},
   "devDependencies": {
-    "colors": "^1.1.2"
+    "colors": "^1.1.2",
+    "prettier": "^1.5.3"
   }
 }
