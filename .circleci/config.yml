@@ -15,12 +15,14 @@ jobs:
     steps:
       - checkout
 
-      # Check that node installed properly
-      - run: |
-          node -v
-          npm -v
+      - run:
+          name: "Node version check"
+          command: "node -v && npm -v"
 
-      - run: |
-          sudo npm i
-          sudo npm run test
-          sudo npm run format
+      - run:
+          name: "Dependency installation"
+          command: "sudo npm i"
+
+      - run:
+          name: "Formatting/testing"
+          command: "sudo npm run test && sudo npm run format"
