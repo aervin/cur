@@ -16,7 +16,7 @@ jobs:
       - checkout
 
       # Check that node installed properly
-      -run: |
+      - run: |
           node -v
           npm -v
 
