@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/aervin/usd-please/tree/master.svg?style=shield)](https://circleci.com/gh/aervin/usd-please/tree/master)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 # usd-please
 Its only job is to transform integers/decimals into USD currency format.
 
