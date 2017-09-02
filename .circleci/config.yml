@@ -20,9 +20,13 @@ jobs:
       #     command: "node -v && npm -v"
 
       - run:
-          name: "Dependency installation"
-          command: "sudo npm i"
+          name: Dependency installation
+          command: npm i
 
       - run:
-          name: "Formatting/testing"
-          command: "sudo npm run test && sudo npm run format"
+          name: Testing
+          command: npm run test
+        
+      - run:
+          name: Formatting
+          command: npm run format
