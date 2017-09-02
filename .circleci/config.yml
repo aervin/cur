@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: ubuntu:14.04
-      - image: node:8.0
+      - image: circleci/node:8.0
 
     working_directory: ~/usd-please
 
