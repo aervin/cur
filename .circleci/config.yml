@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: ubuntu:14.04
+      - image: node:8.0
+
+    working_directory: ~/usd-please
+
+    # branches:
+    #   ignore:
+    #     - develop
+    #     - /feature-.*/
+
+    steps:
+      - checkout
+
+      # Check that node installed properly
+      -run: |
+          node -v
+          npm -v
+
+      - run: |
+          sudo npm i
+          sudo npm run test
+          sudo npm run format
