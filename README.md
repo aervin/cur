@@ -1,6 +1,11 @@
 # usd-please
 Its only job is to transform integers/decimals into USD currency format.
 
+Installation:
+```
+npm i -S usd-please@latest
+```
+
 Usage:
 ```
 usd(figureToBeFormatted: number, returnDollarsAndCents: boolean) => string || undefined
