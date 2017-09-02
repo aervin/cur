@@ -15,9 +15,9 @@ jobs:
     steps:
       - checkout
 
-      - run:
-          name: "Node version check"
-          command: "node -v && npm -v"
+      # - run:
+      #     name: "Node version check"
+      #     command: "node -v && npm -v"
 
       - run:
           name: "Dependency installation"
