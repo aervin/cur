@@ -1,24 +1,24 @@
-const assert = require('assert')
-const usd = require('./usd-please')
-const colors = require('colors')
-const fs = require('fs')
+const assert = require("assert")
+const usd = require("./usd-please")
+const colors = require("colors")
+const fs = require("fs")
 
 const pass = desc => console.log(`${desc} ${colors.bgGreen.black(`PASS`)}\n`)
 const fail = desc => console.log(`${desc} ${colors.bgRed(`FAIL!`)}`)
 
-const start = Date.now()
+const startOfDirectoryWalk = Date.now()
 
 console.log(`${colors.bgYellow.black(`Testing usd-please...\n`)}`)
 
-const getAllFiles = function(directory, fileList = []) {
+const getAllFiles = function(directory = "./", fileList = []) {
     const files = fs.readdirSync(directory)
     files.forEach(file => {
         if (
             fs.statSync(directory + file).isDirectory() &&
-            (directory + file).indexOf('node_modules') === -1 &&
-            (directory + file).indexOf('git') === -1
+            (directory + file).indexOf("node_modules") === -1 &&
+            (directory + file).indexOf("git") === -1
         ) {
-            fileList = getAllFiles(directory + file + '/', fileList)
+            fileList = getAllFiles(directory + file + "/", fileList)
         } else {
             fileList.push(directory + file)
         }
@@ -26,10 +26,17 @@ const getAllFiles = function(directory, fileList = []) {
     return fileList
 }
 
+const directoryFiles = getAllFiles()
+const directoryWalkDuration = Date.now() - startOfDirectoryWalk
+
+console.log(
+    `It took ${colors.bgCyan.black(
+        `${directoryWalkDuration}ms`
+    )} to find this project's test files.\n`
+)
+
 let testCount = 0
-
-const directoryFiles = getAllFiles('./')
-
+const start = Date.now()
 if (directoryFiles !== undefined) {
     const dotTestDot = /.usd-test.js/
     const testFiles = directoryFiles.filter(file => {
