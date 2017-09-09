@@ -36,26 +36,3 @@ const formattedDollars = usd(dollars)
 console.log(`$${formattedDollars}`)
 // =>  $1,235
 ```
-<br>
-
-
-This project uses Node's built-in assertion library for testing. Additional tests can be added to `test.js` easily. The project is formatted using Prettier.
-```
-npm run test
-```
-is a wrapper for
-```
-node ./test.js
-```
-and
-```
-npm run format
-```
-is a wrapper for
-```
-prettier --write --tab-width 4 --no-semi --trailing-comma none ./*.js
-```
-<br>
-
-
-Please post bugs to the issues page. Thanks!

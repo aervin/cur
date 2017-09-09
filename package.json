@@ -1,6 +1,6 @@
 {
   "name": "usd-please",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "It transforms integers/decimals into USD currency format.",
   "main": "usd-please.js",
   "scripts": {
