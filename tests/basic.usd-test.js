@@ -30,6 +30,14 @@ const tests = [
         },
         expected: '1,234.57',
         description: 'It should round cents up...'
+    },
+    {
+        usdParams: {
+            amount: 9812,
+            includeCents: true
+        },
+        expected: '9,812.00',
+        description: 'It should add zeros if needed...'
     }
 ]
 

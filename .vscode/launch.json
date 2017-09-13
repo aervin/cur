@@ -11,10 +11,11 @@
             "program": "${workspaceRoot}/test.js"
         },
         {
-            "name": "Attach to Process",
             "type": "node",
+            "name": "Attach to Process",
+            "protocol": "inspector",
             "request": "attach",
-            "port": 7411
+            "port": 5858
         }
     ]
 }

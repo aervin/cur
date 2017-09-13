@@ -5,17 +5,23 @@ var usdPlease = function(formatMe, useCents) {
         var _formatMe = round(formatMe, 2).toString()
         var _useCents = useCents
         var isNegative = formatMe < 0
+        var decimalIndex = formatMe.toString().search(/\./)
+        var isDecimal = formatMe.toString().search(/\./) !== -1
 
         var leftOfDecimal = /.+?(?=\.)/g
         var rightOfDecimal = /[^.]+$/g
 
-        var leftNumber = _formatMe.match(leftOfDecimal)[0] || undefined
+        var leftNumber =
+            (isDecimal ? _formatMe.match(leftOfDecimal)[0] : _formatMe) ||
+            undefined
         leftNumber =
             typeof leftNumber !== `undefined` && isNegative
                 ? leftNumber.slice(1)
                 : leftNumber
 
-        var rightNumber = _formatMe.match(rightOfDecimal)[0] || undefined
+        var rightNumber = isDecimal
+            ? _formatMe.match(rightOfDecimal)[0]
+            : undefined
         rightNumber =
             typeof rightNumber !== "undefined" && rightNumber.length === 1
                 ? rightNumber + `0`
@@ -28,9 +34,13 @@ var usdPlease = function(formatMe, useCents) {
                 ? getUSDCommaSeparatedNumber(leftNumber)
                 : undefined
 
-        var cents = _useCents ? _formatMe.match(rightOfDecimal)[0] : undefined
-        if (cents !== undefined && cents.length < 2) {
-            cents += `0`
+        let cents
+        if (_useCents && !isDecimal) {
+            cents = "00"
+        } else if (_useCents && isDecimal) {
+            cents = _formatMe.match(rightOfDecimal)[0] || undefined
+            cents =
+                cents !== undefined && cents.length < 2 ? (cents += `0`) : cents
         }
 
         if (!_useCents) {

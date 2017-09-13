@@ -43,28 +43,21 @@ if (directoryFiles !== undefined) {
         return file.match(dotTestDot) !== null
     })
     testFiles.forEach(file => {
-        try {
-            const tests = require(file)
-            tests.forEach(test => {
-                testCount++
-                result = usd(test.usdParams.amount, test.usdParams.includeCents)
-                expected = test.expected || undefined
-                testDesc = `[${testCount}] ${test.description}`
-                try {
-                    assert.strictEqual(result, expected)
-                    pass(testDesc)
-                } catch (e) {
-                    fail(testDesc)
-                    console.log(`${result} !== ${expected}`)
-                    process.exit(1)
-                }
-            })
-        } catch (e) {
-            console.error(`
-                Problem importing test from file ${file}.
-            `)
-            console.error(e)
-        }
+        const tests = require(file)
+        tests.forEach(test => {
+            testCount++
+            result = usd(test.usdParams.amount, test.usdParams.includeCents)
+            expected = test.expected || undefined
+            testDesc = `[${testCount}] ${test.description}`
+            try {
+                assert.strictEqual(result, expected)
+                pass(testDesc)
+            } catch (e) {
+                fail(testDesc)
+                console.log(`${result} !== ${expected}`)
+                process.exit()
+            }
+        })
     })
 }
 
