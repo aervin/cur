@@ -1,48 +1,46 @@
-var types = ['number'];
+var types = ['number']
 
 var usdPlease = function(formatMe, useCents) {
     if (validateArgs(formatMe)) {
-        var _formatMe = round(formatMe, 2).toString();
-        var _useCents = useCents;
-        var isNegative = formatMe < 0;
-        var decimalIndex = formatMe.toString().search(/\./);
-        var isDecimal = formatMe.toString().search(/\./) !== -1;
+        var _formatMe = round(formatMe, 2).toString()
+        var _useCents = useCents
+        var isNegative = formatMe < 0
+        var decimalIndex = formatMe.toString().search(/\./)
+        var isDecimal = formatMe.toString().search(/\./) !== -1
 
-        var leftOfDecimal = /.+?(?=\.)/g;
-        var rightOfDecimal = /[^.]+$/g;
+        var leftOfDecimal = /.+?(?=\.)/g
+        var rightOfDecimal = /[^.]+$/g
 
         var leftNumber =
             (isDecimal ? _formatMe.match(leftOfDecimal)[0] : _formatMe) ||
-            undefined;
+            undefined
         leftNumber =
             typeof leftNumber !== `undefined` && isNegative
                 ? leftNumber.slice(1)
-                : leftNumber;
+                : leftNumber
 
         var rightNumber = isDecimal
             ? _formatMe.match(rightOfDecimal)[0]
-            : undefined;
+            : undefined
         rightNumber =
             typeof rightNumber !== 'undefined' && rightNumber.length === 1
                 ? rightNumber + `0`
-                : rightNumber;
+                : rightNumber
 
-        var roundUp = parseInt(rightNumber) >= 50 || false;
+        var roundUp = parseInt(rightNumber) >= 50 || false
 
         var dollars =
             leftNumber !== undefined && leftNumber !== `0`
                 ? getUSDCommaSeparatedNumber(leftNumber)
-                : undefined;
+                : undefined
 
-        var cents;
+        var cents
         if (_useCents && !isDecimal) {
-            cents = '00';
+            cents = '00'
         } else if (_useCents && isDecimal) {
-            cents = _formatMe.match(rightOfDecimal)[0] || undefined;
+            cents = _formatMe.match(rightOfDecimal)[0] || undefined
             cents =
-                cents !== undefined && cents.length < 2
-                    ? (cents += `0`)
-                    : cents;
+                cents !== undefined && cents.length < 2 ? (cents += `0`) : cents
         }
 
         if (!_useCents) {
@@ -50,19 +48,19 @@ var usdPlease = function(formatMe, useCents) {
                 ? getUSDCommaSeparatedNumber(
                       (parseInt(leftNumber) + 1).toString()
                   )
-                : dollars;
+                : dollars
         }
 
         var result = `${isNegative ? `-` : ``}${dollars || ``}${cents !==
         undefined
             ? `.` + cents
-            : ``}`;
-        return result;
+            : ``}`
+        return result
     }
-    return undefined;
-};
+    return undefined
+}
 
-module.exports = usdPlease;
+module.exports = usdPlease
 
 /** Utility functions */
 
@@ -72,8 +70,8 @@ module.exports = usdPlease;
  * @returns {string}
  */
 var getUSDCommaSeparatedNumber = function(num) {
-    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-};
+    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
 
 /**
  * Determines if number primitive
@@ -82,8 +80,8 @@ var getUSDCommaSeparatedNumber = function(num) {
  * @returns {boolean}
  */
 var isFloat = function(num) {
-    return num % 1 === 0;
-};
+    return num % 1 === 0
+}
 
 /**
  * Rounds 123.45678 => 123.46
@@ -93,21 +91,21 @@ var isFloat = function(num) {
  */
 var round = function(value, exp) {
     if (typeof exp === 'undefined' || +exp === 0) {
-        return Math.round(value);
+        return Math.round(value)
     }
 
-    value = +value;
-    exp = +exp;
+    value = +value
+    exp = +exp
 
     if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
-        return NaN;
+        return NaN
     }
 
-    value = value.toString().split('e');
-    value = Math.round(+(value[0] + 'e' + (value[1] ? +value[1] + exp : exp)));
-    value = value.toString().split('e');
-    return +(value[0] + 'e' + (value[1] ? +value[1] - exp : -exp));
-};
+    value = value.toString().split('e')
+    value = Math.round(+(value[0] + 'e' + (value[1] ? +value[1] + exp : exp)))
+    value = value.toString().split('e')
+    return +(value[0] + 'e' + (value[1] ? +value[1] - exp : -exp))
+}
 
 /**
  * The arg to be formatted and returned
@@ -116,5 +114,5 @@ var round = function(value, exp) {
  * @returns {boolean}
  */
 var validateArgs = function(arg) {
-    return types.indexOf(typeof arg) >= 0 ? true : false;
-};
+    return types.indexOf(typeof arg) >= 0 ? true : false
+}

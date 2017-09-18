@@ -1,88 +1,98 @@
-const fs = require('fs');
-const getAllFilesFromDirectory = require('./utils/getAllFilesFromDirectory');
-var reader = require('buffered-reader');
-var BinaryReader = reader.BinaryReader;
-var DataReader = reader.DataReader;
+const fs = require('fs')
+const getAllFilesFromDirectory = require('./utils/getAllFilesFromDirectory')
+const prettier = require('prettier')
 
-let replacementVariableIndex = 0;
+console.log(`Building usd-please...\n`)
 
-console.log(`Building usd-please...\n\n`);
-
-const srcDirectoryFiles = getAllFilesFromDirectory(`${__dirname}/src/`);
-
+const srcDirectoryFiles = getAllFilesFromDirectory(`${__dirname}/src/`)
 if (srcDirectoryFiles !== undefined) {
-    const usdPleaseFile = /src.js/;
+    const usdPleaseFile = /src.js/
     const usdPlease =
         srcDirectoryFiles.filter(file => {
-            return file.match(usdPleaseFile) !== null;
-        })[0] || undefined;
+            return file.match(usdPleaseFile) !== null
+        })[0] || undefined
 
     if (usdPlease !== undefined) {
-        let newContents = '';
-        const reader = new DataReader(usdPlease, {
-            encoding: 'utf-8'
-        })
-            .on('error', error => {
-                console.error(error);
-                console.log(`Problem reading ${usdPlease} file contents...`);
-                process.exit(1);
-            })
-            .on('line', line => {
-                if (line !== undefined) {
-                    newLine = stripWhitespaceAndNewLine(line);
-                    newContents += newLine !== undefined ? `${newLine}` : '';
-                }
-            })
-            .on('end', () => {
-                newContents = stripComments(newContents);
-                replaceFileContents(newContents);
-                console.log(`Reached the end of file ${usdPlease}.`);
-                process.exit(0);
-            })
-            .read();
+        /** Add semicolons to source before minifying */
+        let sourceFile = prettier.format(
+            fs.readFileSync(usdPlease, { encoding: 'utf-8' }),
+            {
+                semi: true
+            }
+        )
+
+        /** Minify */
+        sourceFile = stripWhitespaceAndNewLine(sourceFile)
+        sourceFile = addSpacesAroundKeywords(sourceFile)
+        sourceFile = stripComments(sourceFile)
+        console.log('Successfully minified usd-please...\n')
+
+        /** Write contents to file */
+        replaceFileContents(sourceFile)
+        console.log('Successfully wrote contents to usd-please.js...\n')
+        process.exit(0)
     }
+}
+
+/**
+ * Adds spaces around keywords which require it.
+ * @param {string} source 
+ * @returns {string}
+ */
+function addSpacesAroundKeywords(source) {
+    if (source !== undefined && typeof source === 'string') {
+        const regexps = {
+            var: /(var)/g,
+            return: /(return)/g,
+            typeof: /(typeof)/g,
+            else_if: /(elseif)/g
+        }
+        for (const expressionKey of Object.keys(regexps)) {
+            source = source.replace(
+                regexps[expressionKey],
+                expressionKey.replace(/_/g, ' ') + ' '
+            )
+        }
+        return source || undefined
+    }
+    return undefined
 }
 
 function replaceFileContents(newContents) {
     fs.writeFileSync('./usd-please.js', newContents, error => {
-        console.error(error);
-        console.log(`Problem writing minified contents to dist file...`);
-        process.exit(1);
-    });
+        console.error(error)
+        console.log(`Problem writing minified contents to dist file...`)
+        process.exit(1)
+    })
 }
 
 /**
- * Removes comments from file. 
- * @param {string} newFileContents 
+ * Parse entire sourcefile, removing comments. 
+ * @param {string} source 
  * @returns {string}
  */
-function stripComments(newFileContents) {
-    const allComments = /\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/g;
-    return newFileContents.replace(allComments, '');
+function stripComments(source) {
+    if (source !== undefined && typeof source === 'string') {
+        const allComments = /\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/g
+        return source.replace(allComments, '')
+    }
+    return undefined
 }
 
 /**
- * Called on every line of the source file,
- * removing spaces and newlines from each line. 
- * @param {any} line 
+ * Parse entire sourcefile, removing spaces
+ * and newline characters.
+ * @param {string} source 
  * @returns 
  */
-function stripWhitespaceAndNewLine(line) {
-    if (typeof line === 'string') {
-        if (line.trim() === '') {
-            return undefined;
+function stripWhitespaceAndNewLine(source) {
+    if (source !== undefined && typeof source === 'string') {
+        if (source.trim() === '') {
+            return undefined
         }
-        const allSpacesAndNewLineCharacters = /[ \n]/g;
-        const allVarKeywords = /(var)/g;
-        const allReturnKeywords = /(return)/g;
-        const allTypeOfKeywords = /(typeof)/g;
-        const allElseKeywords = /(elseif)/g;
-        line = line.replace(allSpacesAndNewLineCharacters, '');
-        line = line.replace(allVarKeywords, 'var ');
-        line = line.replace(allReturnKeywords, 'return ');
-        line = line.replace(allTypeOfKeywords, 'typeof ');
-        line = line.replace(allElseKeywords, 'else if');
-        return line || undefined;
+        const allSpacesAndNewLineCharacters = /[ \n]/g
+        source = source.replace(allSpacesAndNewLineCharacters, '')
+        return source || undefined
     }
-    return undefined;
+    return undefined
 }
