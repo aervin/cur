@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-const getAllFiles = function(directory = './', fileList = []) {
+const getAllFiles = function(directory = __dirname, fileList = []) {
     const files = fs.readdirSync(directory)
     files.forEach(file => {
         if (

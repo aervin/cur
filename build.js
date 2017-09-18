@@ -4,9 +4,11 @@ var reader = require('buffered-reader');
 var BinaryReader = reader.BinaryReader;
 var DataReader = reader.DataReader;
 
+let replacementVariableIndex = 0;
+
 console.log(`Building usd-please...\n\n`);
 
-const srcDirectoryFiles = getAllFilesFromDirectory('./src/');
+const srcDirectoryFiles = getAllFilesFromDirectory(`${__dirname}/src/`);
 
 if (srcDirectoryFiles !== undefined) {
     const usdPleaseFile = /src.js/;
@@ -55,7 +57,7 @@ function replaceFileContents(newContents) {
  * @returns {string}
  */
 function stripComments(newFileContents) {
-    const allComments = /\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/g
+    const allComments = /\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/g;
     return newFileContents.replace(allComments, '');
 }
 
@@ -74,12 +76,12 @@ function stripWhitespaceAndNewLine(line) {
         const allVarKeywords = /(var)/g;
         const allReturnKeywords = /(return)/g;
         const allTypeOfKeywords = /(typeof)/g;
-        const allElseKeywords = /(else)/g;
+        const allElseKeywords = /(elseif)/g;
         line = line.replace(allSpacesAndNewLineCharacters, '');
         line = line.replace(allVarKeywords, 'var ');
         line = line.replace(allReturnKeywords, 'return ');
         line = line.replace(allTypeOfKeywords, 'typeof ');
-        line = line.replace(allElseKeywords, 'else ');
+        line = line.replace(allElseKeywords, 'else if');
         return line || undefined;
     }
     return undefined;
