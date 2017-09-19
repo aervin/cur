@@ -1,30 +1,50 @@
-var t = ['number']
-var usd = function(f, u) {
-    if (val(f)) {
-        var _f = rnd(f, 2).toString()
-        var _u = u
-        var n = f < 0
-        var d = f.toString().search(/\./)
-        var s = f.toString().search(/\./) !== -1
-        var lod = /.+?(?=\.)/g
-        var rod = /[^.]+$/g
-        var ln = (s ? _f.match(lod)[0] : _f) || undefined
-        ln = typeof ln !== 'undefined' && n ? ln.slice(1) : ln
-        var rn = s ? _f.match(rod)[0] : undefined
-        rn = typeof rn !== 'undefined' && rn.length === 1 ? rn + '0' : rn
-        var r = parseInt(rn) >= 50 || false
-        var d = ln !== undefined && ln !== '0' ? sep(ln) : undefined
-        var c
-        if (_u && !s) {
-            c = '00'
-        } else if (_u && s) {
-            c = _f.match(rod)[0] || undefined
-            c = c !== undefined && c.length < 2 ? (c += '0') : c
+var usd = function(amount, includeCents) {
+    if (typeof amount === 'number') {
+        var _amount = rnd(amount, 2).toString()
+        var amountIsNegative = amount < 0
+        var amountIsDecimal = amount.toString().search(/\./) !== -1
+        var leftOfAmountDecimal = /.+?(?=\.)/g
+        var rightOfAmountDecimal = /[^.]+$/g
+        var amountLeftNumber =
+            (amountIsDecimal
+                ? _amount.match(leftOfAmountDecimal)[0]
+                : _amount) || undefined
+        amountLeftNumber =
+            typeof amountLeftNumber !== 'undefined' && amountIsNegative
+                ? amountLeftNumber.slice(1)
+                : amountLeftNumber
+        var amountRightNumber = amountIsDecimal
+            ? _amount.match(rightOfAmountDecimal)[0]
+            : undefined
+        amountRightNumber =
+            typeof amountRightNumber !== 'undefined' &&
+            amountRightNumber.length === 1
+                ? amountRightNumber + '0'
+                : amountRightNumber
+        var roundAmountUp = parseInt(amountRightNumber) >= 50 || false
+        var amountDollars =
+            amountLeftNumber !== undefined && amountLeftNumber !== '0'
+                ? sep(amountLeftNumber)
+                : undefined
+        var amountCents
+        if (includeCents && !amountIsDecimal) {
+            amountCents = '00'
+        } else if (includeCents && amountIsDecimal) {
+            amountCents = _amount.match(rightOfAmountDecimal)[0] || undefined
+            amountCents =
+                amountCents !== undefined && amountCents.length < 2
+                    ? (amountCents += '0')
+                    : amountCents
         }
-        if (!_u) {
-            d = r ? sep((parseInt(ln) + 1).toString()) : d
+        if (!includeCents) {
+            amountDollars = roundAmountUp
+                ? sep((parseInt(amountLeftNumber) + 1).toString())
+                : amountDollars
         }
-        var res = (n ? '-' : '') + (d || '') + (c !== undefined ? '.' + c : '')
+        var res =
+            (amountIsNegative ? '-' : '') +
+            (amountDollars || '') +
+            (amountCents !== undefined ? '.' + amountCents : '')
         return res
     }
     return undefined
@@ -45,8 +65,5 @@ var rnd = function(v, exp) {
     v = Math.round(+(v[0] + 'e' + (v[1] ? +v[1] + exp : exp)))
     v = v.toString().split('e')
     return +(v[0] + 'e' + (v[1] ? +v[1] - exp : -exp))
-}
-var val = function(a) {
-    return t.indexOf(typeof a) >= 0 ? true : false
 }
 module.exports = usd

@@ -1,5 +1,6 @@
 const assert = require('assert')
-const usd = require('./usd-please')
+const usd = require('./usd-please') // bundle
+//const usd = require('./src/src') // source
 const colors = require('colors')
 const fs = require('fs')
 const getAllFilesFromDirectory = require('./utils/getAllFilesFromDirectory')
