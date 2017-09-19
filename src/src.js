@@ -8,49 +8,27 @@ var usd = function(f, u) {
         var s = f.toString().search(/\./) !== -1
         var lod = /.+?(?=\.)/g
         var rod = /[^.]+$/g
-        var ln =
-            (s ? _f.match(lod)[0] : _f) ||
-            undefined
-        ln =
-            typeof ln !== `undefined` && n
-                ? ln.slice(1)
-                : ln
-        var rn = s
-            ? _f.match(rod)[0]
-            : undefined
-        rn =
-            typeof rn !== 'undefined' && rn.length === 1
-                ? rn + `0`
-                : rn
+        var ln = (s ? _f.match(lod)[0] : _f) || undefined
+        ln = typeof ln !== 'undefined' && n ? ln.slice(1) : ln
+        var rn = s ? _f.match(rod)[0] : undefined
+        rn = typeof rn !== 'undefined' && rn.length === 1 ? rn + '0' : rn
         var r = parseInt(rn) >= 50 || false
-        var d =
-            ln !== undefined && ln !== `0`
-                ? sep(ln)
-                : undefined
+        var d = ln !== undefined && ln !== '0' ? sep(ln) : undefined
         var c
         if (_u && !s) {
             c = '00'
         } else if (_u && s) {
             c = _f.match(rod)[0] || undefined
-            c =
-                c !== undefined && c.length < 2 ? (c += `0`) : c
+            c = c !== undefined && c.length < 2 ? (c += '0') : c
         }
         if (!_u) {
-            d = r
-                ? sep(
-                      (parseInt(ln) + 1).toString()
-                  )
-                : d
+            d = r ? sep((parseInt(ln) + 1).toString()) : d
         }
-        var res = `${n ? `-` : ``}${d || ``}${c !==
-        undefined
-            ? `.` + c
-            : ``}`
+        var res = (n ? '-' : '') + (d || '') + (c !== undefined ? '.' + c : '')
         return res
     }
     return undefined
 }
-module.exports = usd
 var sep = function(num) {
     return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
@@ -71,3 +49,4 @@ var rnd = function(v, exp) {
 var val = function(a) {
     return t.indexOf(typeof a) >= 0 ? true : false
 }
+module.exports = usd

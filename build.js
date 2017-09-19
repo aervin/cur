@@ -1,6 +1,7 @@
 const fs = require('fs')
 const getAllFilesFromDirectory = require('./utils/getAllFilesFromDirectory')
 const prettier = require('prettier')
+const uglify = require('uglify-js')
 
 console.log(`Building usd-please...\n`)
 
@@ -22,13 +23,11 @@ if (srcDirectoryFiles !== undefined) {
         )
 
         /** Minify */
-        sourceFile = stripWhitespaceAndNewLine(sourceFile)
-        sourceFile = addSpacesAroundKeywords(sourceFile)
-        sourceFile = stripComments(sourceFile)
+        sourceFile = uglify.minify([sourceFile])
         console.log('Successfully minified usd-please...\n')
 
         /** Write contents to file */
-        replaceFileContents(sourceFile)
+        replaceFileContents(sourceFile.code)
         console.log('Successfully wrote contents to usd-please.js...\n')
         process.exit(0)
     }
