@@ -1,9 +1,9 @@
-const assert = require('assert')
-const cur = require('./cur') // bundle
+const assert = require("assert")
+const cur = require("./cur") // bundle
 //const usd = require('./src/src') // source
-const colors = require('colors')
-const fs = require('fs')
-const getAllFilesFromDirectory = require('./utils/getAllFilesFromDirectory')
+const colors = require("colors")
+const fs = require("fs")
+const getAllFilesFromDirectory = require("./utils/getAllFilesFromDirectory")
 
 const pass = desc => console.log(`${desc} ${colors.bgGreen.black(`PASS`)}\n`)
 const fail = desc => console.log(`${desc} ${colors.bgRed(`FAIL!`)}`)

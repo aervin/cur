@@ -1,36 +1,19 @@
 var cur = function(amount, includeCents, config) {
     if (typeof amount === 'number') {
-        config =
-            config === undefined
-                ? { thousandsSeparator: ',', decimalSeparator: '.' }
-                : config
-        config.thousandsSeparator =
-            config.thousandsSeparator === undefined
-                ? ','
-                : config.thousandsSeparator
-        config.decimalSeparator =
-            config.decimalSeparator === undefined
-                ? '.'
-                : config.decimalSeparator
+        config = config === undefined ? { thousandsSeparator: ',', decimalSeparator: '.' } : config
+        config.thousandsSeparator = config.thousandsSeparator === undefined ? ',' : config.thousandsSeparator
+        config.decimalSeparator = config.decimalSeparator === undefined ? '.' : config.decimalSeparator
         var _amount = rnd(amount, 2).toString()
         var amountIsNegative = amount < 0
         var amountIsDecimal = amount.toString().search(/\./) !== -1
         var leftOfAmountDecimal = /.+?(?=\.)/g
         var rightOfAmountDecimal = /[^.]+$/g
-        var amountLeftNumber =
-            (amountIsDecimal
-                ? _amount.match(leftOfAmountDecimal)[0]
-                : _amount) || undefined
+        var amountLeftNumber = (amountIsDecimal ? _amount.match(leftOfAmountDecimal)[0] : _amount) || undefined
         amountLeftNumber =
-            typeof amountLeftNumber !== 'undefined' && amountIsNegative
-                ? amountLeftNumber.slice(1)
-                : amountLeftNumber
-        var amountRightNumber = amountIsDecimal
-            ? _amount.match(rightOfAmountDecimal)[0]
-            : undefined
+            typeof amountLeftNumber !== 'undefined' && amountIsNegative ? amountLeftNumber.slice(1) : amountLeftNumber
+        var amountRightNumber = amountIsDecimal ? _amount.match(rightOfAmountDecimal)[0] : undefined
         amountRightNumber =
-            typeof amountRightNumber !== 'undefined' &&
-            amountRightNumber.length === 1
+            typeof amountRightNumber !== 'undefined' && amountRightNumber.length === 1
                 ? amountRightNumber + '0'
                 : amountRightNumber
         var roundAmountUp = parseInt(amountRightNumber) >= 50 || false
@@ -43,34 +26,24 @@ var cur = function(amount, includeCents, config) {
             amountCents = '00'
         } else if (includeCents && amountIsDecimal) {
             amountCents = _amount.match(rightOfAmountDecimal)[0] || undefined
-            amountCents =
-                amountCents !== undefined && amountCents.length < 2
-                    ? (amountCents += '0')
-                    : amountCents
+            amountCents = amountCents !== undefined && amountCents.length < 2 ? (amountCents += '0') : amountCents
         }
         if (!includeCents) {
             amountDollars = roundAmountUp
-                ? sep(
-                      (parseInt(amountLeftNumber) + 1).toString(),
-                      config.thousandsSeparator
-                  )
+                ? sep((parseInt(amountLeftNumber) + 1).toString(), config.thousandsSeparator)
                 : amountDollars
         }
         var res =
             (amountIsNegative ? '-' : '') +
             (amountDollars || '') +
-            (amountCents !== undefined
-                ? config.decimalSeparator + amountCents
-                : '')
+            (amountCents !== undefined ? config.decimalSeparator + amountCents : '')
         return res
     }
     return undefined
 }
 var sep = function(num, separator) {
     if (typeof separator !== 'string') {
-        throw Error(
-            'Problem with thousands separator. config.separator is not of type "string"'
-        )
+        throw Error('Problem with thousands separator. config.separator is not of type "string"')
     }
     return num.replace(/\B(?=(\d{3})+(?!\d))/g, separator)
 }
