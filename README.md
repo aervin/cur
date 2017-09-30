@@ -38,7 +38,7 @@ console.log(`$${formattedDollars}`)
 ```
 import cur from 'cur'
 const dollars = 1234.56
-const formattedDollars = usd(dollars)
+const formattedDollars = cur(dollars)
 
 console.log(`$${formattedDollars}`)
 // =>  $1,235
