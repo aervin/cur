@@ -32,9 +32,14 @@ if (directoryFiles !== undefined) {
         const tests = require(file)
         tests.forEach(test => {
             testCount++
-            result = usd(test.usdParams.amount, test.usdParams.includeCents)
-            expected = test.expected || undefined
-            testDesc = `[${testCount}] ${test.description}`
+            const result = usd(
+                test.usdParams.amount,
+                test.usdParams.includeCents,
+                test.usdParams.config
+            )
+            const expected = test.expected || undefined
+            const config = test.config
+            const testDesc = `[${testCount}] ${test.description}`
             try {
                 assert.strictEqual(result, expected)
                 pass(testDesc)

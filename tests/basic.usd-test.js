@@ -62,6 +62,46 @@ const tests = [
         },
         expected: '-9,812',
         description: 'It should not add zeros but be negative...'
+    },
+    {
+        usdParams: {
+            amount: -9000812.55,
+            includeCents: false
+        },
+        expected: '-9,000,813',
+        description: 'Technically, it should round "down"...'
+    },
+    {
+        usdParams: {
+            amount: 9000812.5,
+            includeCents: false
+        },
+        expected: '9,000,813',
+        description: 'It should round up to nearest whole number...'
+    },
+    {
+        usdParams: {
+            amount: 9000812.5,
+            includeCents: false,
+            config: {
+                thousandsSeparator: "'"
+            }
+        },
+        expected: "9'000'813",
+        description: "The thousands separator should be '..."
+    },
+    {
+        usdParams: {
+            amount: 9000812.5,
+            includeCents: true,
+            /* Ital. Norw. etc */
+            config: {
+                thousandsSeparator: '.',
+                decimalSeparator: ','
+            }
+        },
+        expected: '9.000.812,50',
+        description: "The thousands separator should be '..."
     }
 ]
 

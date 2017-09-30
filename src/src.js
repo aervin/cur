@@ -1,5 +1,9 @@
-var usd = function(amount, includeCents) {
+var usd = function(amount, includeCents, config) {
     if (typeof amount === 'number') {
+        config =
+            config === undefined
+                ? { thousandsSeparator: ',', decimalSeparator: '.' }
+                : config
         var _amount = rnd(amount, 2).toString()
         var amountIsNegative = amount < 0
         var amountIsDecimal = amount.toString().search(/\./) !== -1
@@ -24,7 +28,7 @@ var usd = function(amount, includeCents) {
         var roundAmountUp = parseInt(amountRightNumber) >= 50 || false
         var amountDollars =
             amountLeftNumber !== undefined && amountLeftNumber !== '0'
-                ? sep(amountLeftNumber)
+                ? sep(amountLeftNumber, config.thousandsSeparator)
                 : undefined
         var amountCents
         if (includeCents && !amountIsDecimal) {
@@ -38,19 +42,24 @@ var usd = function(amount, includeCents) {
         }
         if (!includeCents) {
             amountDollars = roundAmountUp
-                ? sep((parseInt(amountLeftNumber) + 1).toString())
+                ? sep((parseInt(amountLeftNumber) + 1).toString(), config.thousandsSeparator)
                 : amountDollars
         }
         var res =
             (amountIsNegative ? '-' : '') +
             (amountDollars || '') +
-            (amountCents !== undefined ? '.' + amountCents : '')
+            (amountCents !== undefined ? config.decimalSeparator + amountCents : '')
         return res
     }
     return undefined
 }
-var sep = function(num) {
-    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+var sep = function(num, separator) {
+    if (typeof separator !== 'string') {
+        throw Error(
+            'Problem with thousands separator. config.separator is not of type "string"'
+        )
+    }
+    return num.replace(/\B(?=(\d{3})+(?!\d))/g, separator)
 }
 var rnd = function(v, exp) {
     if (typeof exp === 'undefined' || +exp === 0) {

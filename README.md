@@ -30,10 +30,22 @@ console.log(`$${formattedDollars}`)
 
 Example without cents:
 ```
-const usd = require('usd-please')
+import usd from 'usd-please'
 const dollars = 1234.56
 const formattedDollars = usd(dollars)
 
 console.log(`$${formattedDollars}`)
 // =>  $1,235
+```
+
+Separators:
+`usd-please` accepts an optional `config` argument with two properties, `thousandsSeparator` and `decimalSeparator`.
+```
+const formatCurrency = require('usd-please')
+const config = { thousandsSeparator: "'", decimalSeparator: "," }
+const amount = 1234.56
+const formattedAmount = formatCurrency(amount, true, config)
+
+console.log(formattedAmount)
+// => 1'234,56
 ```
