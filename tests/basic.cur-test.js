@@ -102,7 +102,32 @@ const tests = [
         },
         expected: '9.000.812,50',
         description: "The thousands separator should be '..."
+    },
+    {
+        curParams: {
+            amount: 12999.12,
+            includeCents: true,
+            /* Ital. Norw. etc */
+            config: {
+                thousandsSeparator: '\''
+            }
+        },
+        expected: '12\'999.12',
+        description: "It should default decimalSeparator to '.'..."
+    },
+    {
+        curParams: {
+            amount: 12999.12,
+            includeCents: true,
+            /* Ital. Norw. etc */
+            config: {
+                decimalSeparator: '\''
+            }
+        },
+        expected: '12,999\'12',
+        description: "It should default thousandsSeparator to ','..."
     }
+
 ]
 
 module.exports = tests

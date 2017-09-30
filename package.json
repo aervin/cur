@@ -1,6 +1,6 @@
 {
   "name": "cur",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "It formats currency using Javascript",
   "main": "cur.js",
   "scripts": {

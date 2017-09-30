@@ -4,6 +4,14 @@ var cur = function(amount, includeCents, config) {
             config === undefined
                 ? { thousandsSeparator: ',', decimalSeparator: '.' }
                 : config
+        config.thousandsSeparator =
+            config.thousandsSeparator === undefined
+                ? ','
+                : config.thousandsSeparator
+        config.decimalSeparator =
+            config.decimalSeparator === undefined
+                ? '.'
+                : config.decimalSeparator
         var _amount = rnd(amount, 2).toString()
         var amountIsNegative = amount < 0
         var amountIsDecimal = amount.toString().search(/\./) !== -1
@@ -42,13 +50,18 @@ var cur = function(amount, includeCents, config) {
         }
         if (!includeCents) {
             amountDollars = roundAmountUp
-                ? sep((parseInt(amountLeftNumber) + 1).toString(), config.thousandsSeparator)
+                ? sep(
+                      (parseInt(amountLeftNumber) + 1).toString(),
+                      config.thousandsSeparator
+                  )
                 : amountDollars
         }
         var res =
             (amountIsNegative ? '-' : '') +
             (amountDollars || '') +
-            (amountCents !== undefined ? config.decimalSeparator + amountCents : '')
+            (amountCents !== undefined
+                ? config.decimalSeparator + amountCents
+                : '')
         return res
     }
     return undefined
