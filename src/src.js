@@ -1,4 +1,4 @@
-var usd = function(amount, includeCents, config) {
+var cur = function(amount, includeCents, config) {
     if (typeof amount === 'number') {
         config =
             config === undefined
@@ -75,4 +75,4 @@ var rnd = function(v, exp) {
     v = v.toString().split('e')
     return +(v[0] + 'e' + (v[1] ? +v[1] - exp : -exp))
 }
-module.exports = usd
+module.exports = cur

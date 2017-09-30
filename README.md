@@ -1,30 +1,34 @@
-[![CircleCI](https://circleci.com/gh/aervin/usd-please/tree/master.svg?style=shield)](https://circleci.com/gh/aervin/usd-please/tree/master)
+[![CircleCI](https://circleci.com/gh/aervin/cur/tree/master.svg?style=shield)](https://circleci.com/gh/aervin/cur/tree/master)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-![minified](http://img.badgesize.io/aervin/usd-please/master/usd-please.js?label=minified)
+![minified](http://img.badgesize.io/aervin/cur/master/cur.js?label=minified)
 
-# usd-please
+# cur
 
-Its only job is to transform integers/decimals into USD currency format. The production compilation weighs in at approximately 900 bytes!
+If you want to format currency, it'll cost you 900 bytes.
 
 ### Installation:
 ```
-npm i -S usd-please@latest
+npm i -S cur@latest
 ```
 <br>
 
 
 ### Usage:
 ```
-usd(figureToBeFormatted: number, returnDollarsAndCents: boolean) => string | undefined
+cur(
+    figureToBeFormatted: number,
+    returnDollarsAndCents: boolean, 
+    config: { thousandsSeparator: string, decimalSeparator: string }
+) => string | undefined
 ```
 <br>
 
 
 ### Example with cents:
 ```
-const usd = require('usd-please')
+const cur = require('cur')
 const dollars = 1234.56
-const formattedDollars = usd(dollars, true)
+const formattedDollars = cur(dollars, true)
 
 console.log(`$${formattedDollars}`)
 // =>  $1,234.56
@@ -32,7 +36,7 @@ console.log(`$${formattedDollars}`)
 
 ### Example without cents:
 ```
-import usd from 'usd-please'
+import cur from 'cur'
 const dollars = 1234.56
 const formattedDollars = usd(dollars)
 
@@ -41,9 +45,9 @@ console.log(`$${formattedDollars}`)
 ```
 
 ### Separators:
-`usd-please` accepts an optional `config` argument with two properties, `thousandsSeparator` and `decimalSeparator`.
+`cur` accepts an optional `config` argument with two properties, `thousandsSeparator` and `decimalSeparator`.
 ```
-const formatCurrency = require('usd-please')
+const formatCurrency = require('cur')
 const config = { thousandsSeparator: "'", decimalSeparator: "," }
 const amount = 1234.56
 const formattedAmount = formatCurrency(amount, true, config)

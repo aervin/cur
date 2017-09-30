@@ -1,6 +1,6 @@
 const tests = [
     {
-        usdParams: {
+        curParams: {
             amount: 1234.56,
             includeCents: false
         },
@@ -8,7 +8,7 @@ const tests = [
         description: 'It should return a string...'
     },
     {
-        usdParams: {
+        curParams: {
             amount: '1234.56',
             includeCents: false
         },
@@ -16,7 +16,7 @@ const tests = [
         description: 'It should return undefined...'
     },
     {
-        usdParams: {
+        curParams: {
             amount: 1234.56112,
             includeCents: true
         },
@@ -24,7 +24,7 @@ const tests = [
         description: 'It should round cents down...'
     },
     {
-        usdParams: {
+        curParams: {
             amount: 1234.56712,
             includeCents: true
         },
@@ -32,7 +32,7 @@ const tests = [
         description: 'It should round cents up...'
     },
     {
-        usdParams: {
+        curParams: {
             amount: 9812,
             includeCents: true
         },
@@ -40,7 +40,7 @@ const tests = [
         description: 'It should add zeros if needed...'
     },
     {
-        usdParams: {
+        curParams: {
             amount: 9812,
             includeCents: false
         },
@@ -48,7 +48,7 @@ const tests = [
         description: 'It should not add zeros...'
     },
     {
-        usdParams: {
+        curParams: {
             amount: -9812,
             includeCents: true
         },
@@ -56,7 +56,7 @@ const tests = [
         description: 'It should add zeros and be negative...'
     },
     {
-        usdParams: {
+        curParams: {
             amount: -9812,
             includeCents: false
         },
@@ -64,7 +64,7 @@ const tests = [
         description: 'It should not add zeros but be negative...'
     },
     {
-        usdParams: {
+        curParams: {
             amount: -9000812.55,
             includeCents: false
         },
@@ -72,7 +72,7 @@ const tests = [
         description: 'Technically, it should round "down"...'
     },
     {
-        usdParams: {
+        curParams: {
             amount: 9000812.5,
             includeCents: false
         },
@@ -80,7 +80,7 @@ const tests = [
         description: 'It should round up to nearest whole number...'
     },
     {
-        usdParams: {
+        curParams: {
             amount: 9000812.5,
             includeCents: false,
             config: {
@@ -91,7 +91,7 @@ const tests = [
         description: "The thousands separator should be '..."
     },
     {
-        usdParams: {
+        curParams: {
             amount: 9000812.5,
             includeCents: true,
             /* Ital. Norw. etc */

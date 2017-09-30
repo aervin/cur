@@ -1,8 +1,8 @@
 {
-  "name": "usd-please",
-  "version": "1.0.5",
-  "description": "It transforms integers/decimals into USD currency format.",
-  "main": "usd-please.js",
+  "name": "cur",
+  "version": "1.0.1",
+  "description": "It formats currency using Javascript",
+  "main": "cur.js",
   "scripts": {
     "build": "node ./build.js",
     "test": "npm run build && node ./test.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aervin/usd-please.git"
+    "url": "git+https://github.com/aervin/cur.git"
   },
   "keywords": [
     "javascript",
@@ -23,9 +23,9 @@
   "author": "aaron.jeffrey.ervin@gmail.com",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/aervin/usd-please/issues"
+    "url": "https://github.com/aervin/cur/issues"
   },
-  "homepage": "https://github.com/aervin/usd-please#readme",
+  "homepage": "https://github.com/aervin/cur#readme",
   "dependencies": {
     "buffered-reader": "^1.0.1"
   },

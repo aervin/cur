@@ -3,20 +3,20 @@ const getAllFilesFromDirectory = require('./utils/getAllFilesFromDirectory')
 const prettier = require('prettier')
 const uglify = require('uglify-js')
 
-console.log(`Building usd-please...\n`)
+console.log(`Building cur...\n`)
 
 const srcDirectoryFiles = getAllFilesFromDirectory(`${__dirname}/src/`)
 if (srcDirectoryFiles !== undefined) {
-    const usdPleaseFile = /src.js/
-    const usdPlease =
+    const curFile = /src.js/
+    const cur =
         srcDirectoryFiles.filter(file => {
-            return file.match(usdPleaseFile) !== null
+            return file.match(curFile) !== null
         })[0] || undefined
 
-    if (usdPlease !== undefined) {
+    if (cur !== undefined) {
         /** Add semicolons to source before minifying */
         let sourceFile = prettier.format(
-            fs.readFileSync(usdPlease, { encoding: 'utf-8' }),
+            fs.readFileSync(cur, { encoding: 'utf-8' }),
             {
                 semi: true
             }
@@ -24,11 +24,11 @@ if (srcDirectoryFiles !== undefined) {
 
         /** Minify */
         sourceFile = uglify.minify([sourceFile])
-        console.log('Successfully minified usd-please...\n')
+        console.log('Successfully minified cur...\n')
 
         /** Write contents to file */
         replaceFileContents(sourceFile.code)
-        console.log('Successfully wrote contents to usd-please.js...\n')
+        console.log('Successfully wrote contents to cur...\n')
         process.exit(0)
     }
 }
@@ -58,7 +58,7 @@ function addSpacesAroundKeywords(source) {
 }
 
 function replaceFileContents(newContents) {
-    fs.writeFileSync('./usd-please.js', newContents, error => {
+    fs.writeFileSync('./cur.js', newContents, error => {
         console.error(error)
         console.log(`Problem writing minified contents to dist file...`)
         process.exit(1)
