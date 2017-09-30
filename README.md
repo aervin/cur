@@ -4,7 +4,7 @@
 
 # cur
 
-If you want to format currency, it'll cost you 900 bytes.
+If you want to format currency, it'll cost you 1kb.
 
 ### Installation:
 ```
