@@ -5,7 +5,7 @@ var cur = function(amount, includeCents, config) {
         config.decimalSeparator = config.decimalSeparator === undefined ? '.' : config.decimalSeparator
         var _amount = rnd(amount, 2).toString()
         var amountIsNegative = amount < 0
-        var amountIsDecimal = amount.toString().search(/\./) !== -1
+        var amountIsDecimal = _amount.search(/\./) !== -1
         var leftOfAmountDecimal = /.+?(?=\.)/g
         var rightOfAmountDecimal = /[^.]+$/g
         var amountLeftNumber = (amountIsDecimal ? _amount.match(leftOfAmountDecimal)[0] : _amount) || undefined

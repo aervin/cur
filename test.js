@@ -1,6 +1,6 @@
 const assert = require("assert")
 const cur = require("./cur") // bundle
-//const usd = require('./src/src') // source
+//const cur = require('./src/src') // source
 const colors = require("colors")
 const fs = require("fs")
 const getAllFilesFromDirectory = require("./utils/getAllFilesFromDirectory")
