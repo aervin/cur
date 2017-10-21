@@ -3,8 +3,7 @@
 ![minified](http://img.badgesize.io/aervin/cur/master/cur.js?label=minified)
 
 # cur
-
-If you want to format currency, it'll cost you 1kb.
+A helper function for currency formatting.
 
 ### Installation:
 ```
