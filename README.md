@@ -12,8 +12,8 @@ npm i -S cur@latest
 <br>
 
 
-### Usage:
-```
+### Interface:
+```javascript
 cur(
     figureToBeFormatted: number,
     returnDollarsAndCents: boolean, 
@@ -22,35 +22,27 @@ cur(
 ```
 <br>
 
+### Example:
+```javascript
+import cur from 'cur'
+
+`$${cur(1234.56)}`
+// "$1,235"
+```
 
 ### Example with cents:
-```
+```javascript
 const cur = require('cur')
-const dollars = 1234.56
-const formattedDollars = cur(dollars, true)
+`$${cur(1234.56, true)}`
 
-console.log(`$${formattedDollars}`)
-// =>  $1,234.56
-```
-
-### Example without cents:
-```
-import cur from 'cur'
-const dollars = 1234.56
-const formattedDollars = cur(dollars)
-
-console.log(`$${formattedDollars}`)
-// =>  $1,235
+// "$1,234.56"
 ```
 
 ### Separators:
 `cur` accepts an optional `config` argument with two properties, `thousandsSeparator` and `decimalSeparator`.
-```
-const formatCurrency = require('cur')
+```javascript
+const cur = require('cur')
 const config = { thousandsSeparator: "'", decimalSeparator: "," }
-const amount = 1234.56
-const formattedAmount = formatCurrency(amount, true, config)
-
-console.log(formattedAmount)
-// => 1'234,56
+'$' + cur(1234.56, true, config)
+// "$1'234,56"
 ```
