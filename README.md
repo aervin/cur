@@ -5,12 +5,11 @@
 # cur
 A helper function for currency formatting.
 
+
 ### Installation:
 ```
 npm i -S cur@latest
 ```
-<br>
-
 
 ### Interface:
 ```javascript
@@ -20,7 +19,6 @@ cur(
     config: { thousandsSeparator: string, decimalSeparator: string }
 ) => string | undefined
 ```
-<br>
 
 ### Example:
 ```javascript
