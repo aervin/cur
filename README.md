@@ -32,8 +32,6 @@ import cur from 'cur'
 
 ### Example with cents:
 ```javascript
-const cur = require('cur')
-
 `$${cur(1234.56, true)}`
 // "$1,234.56"
 ```
@@ -41,8 +39,6 @@ const cur = require('cur')
 ### Separators:
 `cur` accepts an optional `config` argument with two properties, `thousandsSeparator` and `decimalSeparator`.
 ```javascript
-const cur = require('cur')
-
 '$' + cur(1234.56, true, { thousandsSeparator: "'", decimalSeparator: "," })
 // "$1'234,56"
 ```
